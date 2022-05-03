@@ -143,14 +143,51 @@ CREATE PROCEDURE CreateReceiptEntry
                 )
             END
 
-create procedure SelectCamper
-as
-select * from tbl_Camper;
-go
 
-create procedure InsertInitialAccounts
-as
-insert into tbl_Account(fld_PhoneNoNumber, fld_Name, fld_Address, fld_Username, fld_Password)
+
+CREATE PROCEDURE CreateNewAccount
+    @phoneNumber INT,
+	@name VARCHAR(35),
+	@address VARCHAR(40),
+	@username VARCHAR(20),
+	@password VARCHAR(20)
+		AS
+            BEGIN
+                INSERT INTO tbl_Account
+                (
+                    fld_PhoneNoNumber,
+                    fld_Name,
+                    fld_Address,
+                    fld_Username,
+                    fld_Password
+                )
+                VALUES
+                    (
+                        @phoneNumber,
+                        @name,
+                        @address,
+                        @username,
+                        @password
+                    )
+            END
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE SelectCamper
+AS
+SELECT * FROM tbl_Camper;
+GO
+
+CREATE PROCEDURE InsertInitialAccounts
+AS
+INSERT INTO tbl_Account(fld_PhoneNoNumber, fld_Name, fld_Address, fld_Username, fld_Password)
 values
 ('12345678', 'John Doe', '123 Main Street', 'jdoe', 'password'),
 ('12345679', 'Jane Doe', '456 Main Street', 'jdoe', 'password'),
