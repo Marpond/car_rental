@@ -143,6 +143,43 @@ CREATE PROCEDURE CreateReceiptEntry
                 )
             END
 
+
+
+CREATE PROCEDURE CreateNewAccount
+    @phoneNumber INT,
+	@name VARCHAR(35),
+	@address VARCHAR(40),
+	@username VARCHAR(20),
+	@password VARCHAR(20)
+		AS
+            BEGIN
+                INSERT INTO tbl_Account
+                (
+                    fld_PhoneNoNumber,
+                    fld_Name,
+                    fld_Address,
+                    fld_Username,
+                    fld_Password
+                )
+                VALUES
+                    (
+                        @phoneNumber,
+                        @name,
+                        @address,
+                        @username,
+                        @password
+                    )
+            END
+
+
+
+
+
+
+
+
+
+
 CREATE PROCEDURE SelectCamper
 AS
 SELECT * FROM tbl_Camper;
