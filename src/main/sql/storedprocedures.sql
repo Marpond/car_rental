@@ -114,3 +114,14 @@ create procedure SelectCamper
 as
 select * from tbl_Camper;
 go
+
+create procedure InsertInitialAccounts
+as
+insert into tbl_Account(fld_PhoneNoNumber, fld_Name, fld_Address, fld_Username, fld_Password)
+values
+('12345678', 'John Doe', '123 Main Street', 'jdoe', 'password'),
+('12345679', 'Jane Doe', '456 Main Street', 'jdoe', 'password'),
+('12345680', 'John Smith', '789 Main Street', 'jsmith', 'password'),
+('12345681', 'Jane Smith', '012 Main Street', 'jsmith', 'password');
+go
+

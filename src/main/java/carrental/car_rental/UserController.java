@@ -18,7 +18,7 @@ public class UserController implements Initializable {
     DatabaseHandler db = DatabaseHandler.getInstance();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        setComboBoxCampers();
     }
 
     private void setComboBoxCampers() {

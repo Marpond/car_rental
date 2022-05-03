@@ -7,3 +7,5 @@ EXECUTE InsertInitialCamperEntries;
 EXECUTE InsertInitialInsurancePackageEntries;
 
 EXECUTE insertInitialDiscountEntries;
+
+EXECUTE InsertInitialAccounts;
