@@ -18,8 +18,7 @@ CREATE TABLE tbl_InsurancePackage(
 )GO
 
 CREATE TABLE tbl_Camper(
-                           fld_CamperID INT PRIMARY KEY IDENTITY,
-                           fld_LicensePlate NCHAR(10),
+                           fld_LicensePlate NCHAR(10) PRIMARY KEY,
                            fld_CategoryID INT FOREIGN KEY REFERENCES tbl_Category
 )GO
 
@@ -35,10 +34,10 @@ CREATE TABLE tbl_Account(
 CREATE TABLE tbl_Reservation(
                                 fld_ReservationID INT PRIMARY KEY IDENTITY,
                                 fld_DateOfReservation DATE,
-                                fld_RentalStart DATE,
-                                fld_RentalEnd DATE,
+                                fld_RentalStart INT,
+                                fld_RentalEnd INT,
                                 fld_IsCancelled BIT,
-                                fld_CamperID INT FOREIGN KEY REFERENCES tbl_Camper,
+                                fld_LicensePlate NCHAR(10) FOREIGN KEY REFERENCES tbl_Camper,
                                 fld_InsurancePackageID INT FOREIGN KEY REFERENCES tbl_InsurancePackage,
                                 fld_AccountID INT FOREIGN KEY REFERENCES Tbl_Account
 )GO

@@ -20,10 +20,10 @@ AS
 GO
 
 CREATE PROCEDURE CreateNewReservation @dateOfReservation DATE,
-                                      @rentalStart DATE,
-                                      @rentalEnd DATE,
+                                      @rentalStart INT,
+                                      @rentalEnd INT,
                                       @isCancelled BIT,
-                                      @camperID INT,
+                                      @licensePlate NCHAR(10),
                                       @insurancePackageID INT,
                                       @accountID INT
 AS
@@ -31,14 +31,14 @@ AS
                                 fld_RentalStart,
                                 fld_RentalEnd,
                                 fld_IsCancelled,
-                                fld_CamperID,
+                                fld_LicensePlate,
                                 fld_InsurancePackageID,
                                 fld_AccountID)
     VALUES (@dateOfReservation,
             @rentalStart,
             @rentalEnd,
             @isCancelled,
-            @camperID,
+            @licensePlate,
             @insurancePackageID,
             @accountID);
 GO
@@ -142,7 +142,7 @@ CREATE PROCEDURE CreateReceiptEntry
                     @discountID
                 )
             END
-
+Go
 
 
 CREATE PROCEDURE CreateNewAccount
@@ -170,19 +170,6 @@ CREATE PROCEDURE CreateNewAccount
                         @password
                     )
             END
-
-
-
-
-
-
-
-
-
-
-CREATE PROCEDURE SelectCamper
-AS
-SELECT * FROM tbl_Camper;
 GO
 
 CREATE PROCEDURE InsertInitialAccounts

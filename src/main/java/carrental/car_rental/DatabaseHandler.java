@@ -85,4 +85,18 @@ public class DatabaseHandler {
         return campers;
     }
 
+    public List<List<String>> getInsuranceDetails() {
+        List<List<String>> insurance = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT fld_Price, fld_Description FROM tbl_InsurancePackage");
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                insurance.add(List.of(rs.getString("fld_Price"), rs.getString("fld_Description")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return insurance;
+    }
+
 }

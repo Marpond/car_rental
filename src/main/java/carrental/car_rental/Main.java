@@ -10,6 +10,10 @@ import java.io.IOException;
 public class Main extends Application {
     public static Stage stage;
 
+    public static double priceInsurance = 0.0;
+    public static double priceBooking = 0.0;
+    public static double priceTotal = 0.0;
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         DatabaseHandler.DBConstructor();
