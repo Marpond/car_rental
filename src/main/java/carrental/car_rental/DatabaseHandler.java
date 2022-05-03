@@ -57,15 +57,15 @@ public class DatabaseHandler {
         }
     }
 
-    public HashMap<String, String> getAccounts(){
+    public HashMap<String, String> getAccounts() {
         HashMap<String, String> accounts = new HashMap<>();
-        try{
+        try {
             ps = con.prepareStatement("SELECT * FROM tbl_Account");
             rs = ps.executeQuery();
-            while(rs.next()){
+            while(rs.next()) {
                 accounts.put(rs.getString("fld_Username"), rs.getString("fld_Password"));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return accounts;

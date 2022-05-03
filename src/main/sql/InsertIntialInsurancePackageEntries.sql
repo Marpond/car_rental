@@ -1,3 +1,5 @@
+use DB_AutoCamperRental go
+
 CREATE PROCEDURE InsertInitialInsurancePackageEntries
 	AS
 		BEGIN
