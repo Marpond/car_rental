@@ -37,7 +37,6 @@ CREATE TABLE tbl_Reservation(
                                 fld_DateOfReservation DATE,
                                 fld_RentalStart DATE,
                                 fld_RentalEnd DATE,
-                                fld_WarningActive BIT,
                                 fld_IsCancelled BIT,
                                 fld_CamperID INT FOREIGN KEY REFERENCES tbl_Camper,
                                 fld_InsurancePackageID INT FOREIGN KEY REFERENCES tbl_InsurancePackage,
@@ -48,6 +47,7 @@ CREATE TABLE tbl_Payments(
                              fld_PaymentID INT PRIMARY KEY IDENTITY,
                              fld_Deposit10PercentPaid BIT,
                              fld_Deposit90PercentPaid BIT,
+                             fld_WarningActive BIT,
                              fld_CurrentDeadline DATE,
                              fld_ReservationID INT FOREIGN KEY REFERENCES tbl_Reservation
 )GO

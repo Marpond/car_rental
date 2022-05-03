@@ -25,6 +25,13 @@ CREATE PROCEDURE CreateNewReservation
 				fld_InsurancePackageID,
 			    fld_AccountID
 				)
-				VALUES(@dateOfReservation, @rentalStart, @rentalEnd, @warningActive, @isCancelled,  @camperID, @insurancePackageID, @accountID);
+				VALUES(@dateOfReservation,
+				       @rentalStart,
+				       @rentalEnd,
+				       @warningActive,
+				       @isCancelled,
+				       @camperID,
+				       @insurancePackageID,
+				       @accountID);
 			END
 
