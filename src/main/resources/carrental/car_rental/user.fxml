@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carrental.car_rental.UserController">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="back" />
-      <ListView layoutX="40.0" layoutY="82.0" prefHeight="283.0" prefWidth="200.0" />
-      <ComboBox layoutX="40.0" layoutY="56.0" prefHeight="26.0" prefWidth="200.0" />
+      <ListView fx:id="listViewCamperDates" layoutX="40.0" layoutY="82.0" prefHeight="283.0" prefWidth="200.0" />
+      <ComboBox fx:id="comboBoxCampers" layoutX="40.0" layoutY="56.0" prefHeight="26.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

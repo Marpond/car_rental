@@ -110,3 +110,7 @@ CREATE PROCEDURE CreateNewPaymentEntry
             END
 GO
 
+create procedure SelectCamper
+as
+select * from tbl_Camper;
+go

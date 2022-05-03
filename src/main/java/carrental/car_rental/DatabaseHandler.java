@@ -71,4 +71,18 @@ public class DatabaseHandler {
         return accounts;
     }
 
+    public List<String> getCamperLicensePlates() {
+        List<String> campers = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("SELECT fld_LicensePlate FROM tbl_Camper");
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                campers.add(rs.getString("fld_LicensePlate"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return campers;
+    }
+
 }

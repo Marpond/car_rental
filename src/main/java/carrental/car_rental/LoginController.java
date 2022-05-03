@@ -20,6 +20,7 @@ public class LoginController implements Initializable {
     Text textErrorPrompt;
     @FXML
     Button buttonLogin;
+    DatabaseHandler db = DatabaseHandler.getInstance();
 
 
     @Override
@@ -30,7 +31,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private void login() {
-        DatabaseHandler db = DatabaseHandler.getInstance();
         String username = textFieldUsername.getText();
         String password = textFieldPassword.getText();
         HashMap<String, String> accounts = db.getAccounts();;
