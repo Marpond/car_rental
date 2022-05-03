@@ -74,3 +74,4 @@ CREATE TABLE tbl_Accounts(
     fld_Password VARCHAR(20),
     fld_ISAdmin BIT
 )GO
+
