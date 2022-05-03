@@ -59,12 +59,12 @@ CREATE TABLE tbl_Discount(
 
 CREATE TABLE tbl_Receipt(
                             fld_ReceiptID INT PRIMARY KEY IDENTITY,
-                            fld_ReservationID INT,
                             fld_DistanceDriven DOUBLE PRECISION,
                             fld_ReturnedFuel DOUBLE PRECISION,
                             fld_FuelPrice DOUBLE PRECISION,
                             fld_FinalPrice DOUBLE PRECISION,
                             fld_MileagePrice DOUBLE PRECISION,
+                            fld_ReservationID INT FOREIGN KEY REFERENCES tbl_Reservation,
                             fld_DiscountID INT FOREIGN KEY REFERENCES tbl_Discount
 )GO
 
