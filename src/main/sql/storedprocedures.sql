@@ -45,19 +45,19 @@ GO
 
 CREATE PROCEDURE InsertInitialCamperEntries
 AS
-INSERT INTO tbl_Camper(fld_LicensePlate)
-VALUES ('LP001'),
-       ('LP002'),
-       ('LP003'),
-       ('LP004'),
-       ('LP005'),
-       ('LP006'),
-       ('LP007'),
-       ('LP008'),
-       ('LP009'),
-       ('LP010'),
-       ('LP011'),
-       ('LP012')
+INSERT INTO tbl_Camper(fld_LicensePlate, fld_CategoryID)
+VALUES ('LP001', 1),
+       ('LP002', 1),
+       ('LP003', 1),
+       ('LP004', 2),
+       ('LP005', 2),
+       ('LP006', 2),
+       ('LP007', 3),
+       ('LP008', 3),
+       ('LP009', 3),
+       ('LP010', 1),
+       ('LP011', 2),
+       ('LP012', 3)
 GO
 
 CREATE PROCEDURE insertInitialDiscountEntries
