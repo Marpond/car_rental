@@ -8,16 +8,16 @@ import java.sql.ResultSet;
 import java.util.Properties;
 
 
-public class DBConnector {
+public class DatabaseHandler {
     static Connection con;
     static PreparedStatement ps;
     static ResultSet rs;
     private static boolean isCreated = false;
-    private static DBConnector instance;
+    private static DatabaseHandler instance;
 
     public static void DBConstructor(){
         if(!isCreated){
-            instance = new DBConnector();
+            instance = new DatabaseHandler();
             isCreated = true;
         }else{
             //Don't allow creation
@@ -25,11 +25,11 @@ public class DBConnector {
         }
     }
 
-    public static DBConnector getInstance(){
+    public static DatabaseHandler getInstance(){
         return instance;
     }
 
-    private DBConnector(){
+    private DatabaseHandler(){
         try {
             // Load the properties file
             Properties properties = new Properties();
@@ -63,8 +63,8 @@ public class DBConnector {
             ps.setInt(1, 234);
             ps.setString(2, "name2");
             ps.setString(3, "Address2");
-            ps.executeQuery();
-        }catch (Exception e){
+            ps.execute();
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }

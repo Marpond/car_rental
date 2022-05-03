@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HelloController implements Initializable {
+public class Controller implements Initializable {
     @FXML
     private Label welcomeText;
 
@@ -18,10 +18,9 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DBConnector.DBConstructor();
-        DBConnector db = DBConnector.getInstance();
+        DatabaseHandler.DBConstructor();
+        DatabaseHandler db = DatabaseHandler.getInstance();
 
         db.testInsert();
-
     }
 }
