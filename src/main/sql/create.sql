@@ -53,7 +53,7 @@ CREATE TABLE tbl_Payments(
 
 CREATE TABLE tbl_Discount(
                              fld_DiscountID INT PRIMARY KEY IDENTITY,
-                             fld_NumberOfRentals INT,
+                             fld_MaxRentalCount INT,
                              fld_DiscountPercent INT
 )GO
 
@@ -74,4 +74,6 @@ CREATE TABLE tbl_Accounts(
     fld_Password VARCHAR(20),
     fld_ISAdmin BIT
 )GO
+
+
 
