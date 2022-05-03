@@ -1,2 +1,3 @@
 EXECUTE InsertInitialCategories;
 
+EXECUTE InsertInitialCamperEntries;
