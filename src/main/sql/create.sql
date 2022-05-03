@@ -30,7 +30,6 @@ CREATE TABLE tbl_Reservation(
                                 fld_RentalEnd DATE,
                                 fld_WarningActive BIT,
                                 fld_IsCancelled BIT,
-                                fld_CustomerID INT FOREIGN KEY REFERENCES tbl_Customer,
                                 fld_CamperID INT FOREIGN KEY REFERENCES tbl_Camper,
                                 fld_InsurancePackageID INT FOREIGN KEY REFERENCES tbl_InsurancePackage
 )GO
