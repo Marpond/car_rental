@@ -1,3 +1,5 @@
+use DB_AutoCamperRental go
+
 EXECUTE InsertInitialCategories;
 
 EXECUTE InsertInitialCamperEntries;
