@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Properties;
+import java.util.*;
 
 
 public class DatabaseHandler {
@@ -57,16 +57,18 @@ public class DatabaseHandler {
         }
     }
 
-    public void testInsert() {
+    public HashMap<String, String> getAccounts(){
+        HashMap<String, String> accounts = new HashMap<>();
         try{
-            ps = con.prepareStatement("INSERT INTO tbl_Customer(fld_PhoneNoNumber, fld_Name, fld_Address) VALUES(?, ?, ?)");
-            ps.setInt(1, 234);
-            ps.setString(2, "name2");
-            ps.setString(3, "Address2");
-            ps.execute();
-        }catch (Exception e) {
+            ps = con.prepareStatement("SELECT * FROM tbl_Account");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                accounts.put(rs.getString("fld_Username"), rs.getString("fld_Password"));
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
+        return accounts;
     }
 
 }

@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -15,16 +17,14 @@ public class LoginController implements Initializable {
     @FXML
     TextField textFieldPassword;
     @FXML
+    Text textErrorPrompt;
+    @FXML
     Button buttonLogin;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         buttonLogin.setDisable(true);
-
-        DatabaseHandler db = DatabaseHandler.getInstance();
-
-        db.testInsert();
-
         setTextFieldListeners();
     }
 
@@ -33,6 +33,20 @@ public class LoginController implements Initializable {
         DatabaseHandler db = DatabaseHandler.getInstance();
         String username = textFieldUsername.getText();
         String password = textFieldPassword.getText();
+        HashMap<String, String> accounts = db.getAccounts();;
+        // If the accounts hashmap contains the username and password,
+        // then the user is logged in.
+        if (accounts.containsKey(username) && accounts.get(username).equals(password)) {
+            // Check if the user is an admin.
+            if (username.equals("admin")) {
+                SceneController.switchTo("admin");
+            } else {
+                SceneController.switchTo("user");
+            }
+        } else {
+            // If the username or password is incorrect, display an error message.
+            textErrorPrompt.setText("Incorrect username or password.");
+        }
     }
 
     private void setTextFieldListeners() {
