@@ -23,6 +23,15 @@ CREATE TABLE tbl_Camper(
                            fld_CategoryID INT FOREIGN KEY REFERENCES tbl_Category
 )GO
 
+CREATE TABLE tbl_Account(
+                            fld_AccountID INT PRIMARY KEY IDENTITY,
+                            fld_PhoneNoNumber INT,
+                            fld_Name VARCHAR(35),
+                            fld_Address VARCHAR(40),
+                            fld_Username VARCHAR(20),
+                            fld_Password VARCHAR(20)
+)GO
+
 CREATE TABLE tbl_Reservation(
                                 fld_ReservationID INT PRIMARY KEY IDENTITY,
                                 fld_DateOfReservation DATE,
@@ -31,7 +40,8 @@ CREATE TABLE tbl_Reservation(
                                 fld_WarningActive BIT,
                                 fld_IsCancelled BIT,
                                 fld_CamperID INT FOREIGN KEY REFERENCES tbl_Camper,
-                                fld_InsurancePackageID INT FOREIGN KEY REFERENCES tbl_InsurancePackage
+                                fld_InsurancePackageID INT FOREIGN KEY REFERENCES tbl_InsurancePackage,
+                                fld_AccountID INT FOREIGN KEY REFERENCES Tbl_Account
 )GO
 
 CREATE TABLE tbl_Payments(
@@ -59,14 +69,7 @@ CREATE TABLE tbl_Receipt(
                             fld_DiscountID INT FOREIGN KEY REFERENCES tbl_Discount
 )GO
 
-CREATE TABLE tbl_Account(
-    fld_AccountID INT PRIMARY KEY IDENTITY,
-    fld_PhoneNoNumber INT,
-    fld_Name VARCHAR(35),
-    fld_Address VARCHAR(40),
-    fld_Username VARCHAR(20),
-    fld_Password VARCHAR(20)
-)GO
+
 
 
 
