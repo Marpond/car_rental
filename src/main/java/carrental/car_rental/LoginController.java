@@ -28,6 +28,13 @@ public class LoginController implements Initializable {
         setTextFieldListeners();
     }
 
+    @FXML
+    private void login() {
+        DatabaseHandler db = DatabaseHandler.getInstance();
+        String username = textFieldUsername.getText();
+        String password = textFieldPassword.getText();
+    }
+
     private void setTextFieldListeners() {
         textFieldUsername.textProperty().addListener((observable, oldValue, newValue) ->
             buttonLogin.setDisable(newValue.length() <= 0));
