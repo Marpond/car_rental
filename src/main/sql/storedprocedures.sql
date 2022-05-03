@@ -83,3 +83,30 @@ as
            (4000, 'All included');
 go
 
+CREATE PROCEDURE CreateNewPaymentEntry
+    @dep10 BIT,
+	@dep90 BIT,
+	@warningActive BIT,
+	@currentDeadline DATE,
+	@reservationID INT
+		AS
+            BEGIN
+                INSERT INTO tbl_Payments
+                (
+                    fld_Deposit10PercentPaid,
+                    fld_Deposit90PercentPaid,
+                    fld_WarningActive,
+                    fld_CurrentDeadline,
+                    fld_ReservationID
+                )
+                VALUES
+                (
+                    @dep10,
+                    @dep90,
+                    @warningActive,
+                    @currentDeadline,
+                    @reservationID
+                )
+            END
+GO
+
