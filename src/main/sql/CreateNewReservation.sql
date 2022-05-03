@@ -9,7 +9,8 @@ CREATE PROCEDURE CreateNewReservation
 	@isCancelled BIT,
 	@customerID INT,
 	@camperID INT,
-	@insurancePackageID INT
+	@insurancePackageID INT,
+    @accountID INT
 
 		AS
 			BEGIN
@@ -20,10 +21,10 @@ CREATE PROCEDURE CreateNewReservation
 				fld_RentalEnd,
 				fld_WarningActive,
 				fld_IsCancelled,
-				fld_CustomerID,
 				fld_CamperID,
-				fld_InsurancePackageID
+				fld_InsurancePackageID,
+			    fld_AccountID
 				)
-				VALUES(@dateOfReservation, @rentalStart, @rentalEnd, @warningActive, @isCancelled, @customerID, @camperID, @insurancePackageID);
+				VALUES(@dateOfReservation, @rentalStart, @rentalEnd, @warningActive, @isCancelled,  @camperID, @insurancePackageID, @accountID);
 			END
 
