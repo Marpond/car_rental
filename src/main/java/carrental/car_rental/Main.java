@@ -6,6 +6,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Main extends Application {
     public static Stage stage;
@@ -16,6 +22,8 @@ public class Main extends Application {
     public static int startWeek;
     public static int endWeek;
     public static int totalWeek;
+    public static final int currentWeekNumber = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -41,5 +49,23 @@ public class Main extends Application {
         startWeek = 0;
         endWeek = 0;
         totalWeek = 0;
+    }
+
+    public static String formatWeekNumberToDate(int weekNumber) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.WEEK_OF_YEAR, weekNumber);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date ninetyDeadlineDate = calendar.getTime();
+        return sdf.format(ninetyDeadlineDate);
+    }
+
+    public static int formatDateToWeekNumber(String date) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return calendar.get(Calendar.WEEK_OF_YEAR);
     }
 }

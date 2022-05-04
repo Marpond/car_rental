@@ -9,6 +9,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
     @FXML
-    ListView<Integer> listViewCamperDates;
+    ListView<String> listViewCamperDates;
     @FXML
     ComboBox<String> comboBoxCampers;
     @FXML
@@ -68,26 +69,27 @@ public class UserController implements Initializable {
 
     /**
      * Sets the beginning week of the rental period.
+     * Also sets the deadline for the 10% and 90% of the rent
      */
     @FXML
     private void buttonSelectStartClick() {
-        Main.startWeek = listViewCamperDates.getSelectionModel().getSelectedItem();
+        Main.startWeek = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
         buttonSelectEndWeek.setDisable(false);
         buttonSelectStartWeek.setDisable(true);
         textStartWeek.setText(String.valueOf(Main.startWeek));
+        setTextDeadlineValues();
     }
 
     /**
      * Sets the end week of the rental period.
-     * Also sets the total rent period and the deadline for the 10% and 90% of the rent.
+     * Also sets the total rent period.
      */
     @FXML
     private void buttonSelectEndClick() {
-        Main.endWeek = listViewCamperDates.getSelectionModel().getSelectedItem();
+        Main.endWeek = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
         textEndWeek.setText(String.valueOf(Main.endWeek));
         Main.totalWeek = Main.endWeek - Main.startWeek + 1;
-        textTotalRentPeriod.setText(String.valueOf(Main.totalWeek));
-        setTextDeadlineValues();
+        textTotalRentPeriod.setText("%s weeks".formatted(Main.totalWeek));
     }
 
     @FXML
@@ -124,10 +126,9 @@ public class UserController implements Initializable {
     private void fillListViewCamperDates() {
         listViewCamperDates.getItems().clear();
         // Get the current week number
-        int currentWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
-        // +9 because the full price must be paid before 8 weeks of the rental starts
-        for (int i = currentWeek + 9; i <= 52; i++) {
-            listViewCamperDates.getItems().add(i);
+        // +12 because the full price must be paid before 8 weeks of the rental start, just to make sure there are no conflicts
+        for (int i = Main.currentWeekNumber + 12; i <= 52*4; i++) {
+            listViewCamperDates.getItems().add(Main.formatWeekNumberToDate(i));
         }
     }
 
@@ -137,9 +138,9 @@ public class UserController implements Initializable {
     private void setListViewCamperDatesListener() {
         listViewCamperDates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                buttonSelectStartWeek.setDisable(newValue < Main.startWeek);
+                buttonSelectStartWeek.setDisable(Main.formatDateToWeekNumber(newValue) <= Main.startWeek);
                 if (Main.startWeek != 0) {
-                    buttonSelectEndWeek.setDisable(newValue < Main.startWeek);
+                    buttonSelectEndWeek.setDisable(Main.formatDateToWeekNumber(newValue) < Main.startWeek);
                 }
             }
         });
@@ -176,34 +177,12 @@ public class UserController implements Initializable {
         });
     }
     private void setTextDeadlineValues() {
-        if (Main.startWeek != 0) {
             // Calculate the day 2 weeks after today
             LocalDate tenDeadline = LocalDate.now().plusDays(14);
-            textTenPercentDeadline.setText(tenDeadline.toString());
+            textTenPercentDeadline.setText(tenDeadline.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             // Calculate the day 8 weeks before the start of the rental
-            int ninetyDeadline = Main.startWeek - 8;
-            String formattedDate = formatWeekNumberToDate(ninetyDeadline);
+            int ninetyDeadline = Main.startWeek - 7;
+            String formattedDate = Main.formatWeekNumberToDate(ninetyDeadline);
             textNinetyPercentDeadline.setText(formattedDate);
-        }
     }
-
-    private String formatWeekNumberToDate(int weekNumber) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.WEEK_OF_YEAR, weekNumber);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        Date ninetyDeadlineDate = calendar.getTime();
-        return new SimpleDateFormat("yyyy-MM-dd").format(ninetyDeadlineDate);
-    }
-
-    private int formatDateToWeekNumber(String date) {
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return calendar.get(Calendar.WEEK_OF_YEAR);
-    }
-
-
 }

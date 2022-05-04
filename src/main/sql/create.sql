@@ -34,8 +34,8 @@ CREATE TABLE tbl_Account(
 CREATE TABLE tbl_Reservation(
                                 fld_ReservationID INT PRIMARY KEY IDENTITY,
                                 fld_DateOfReservation DATE,
-                                fld_RentalStart INT,
-                                fld_RentalEnd INT,
+                                fld_RentalStart DATE,
+                                fld_RentalEnd DATE,
                                 fld_IsCancelled BIT,
                                 fld_LicensePlate NCHAR(10) FOREIGN KEY REFERENCES tbl_Camper,
                                 fld_InsurancePackageID INT FOREIGN KEY REFERENCES tbl_InsurancePackage,
