@@ -3,6 +3,7 @@ package carrental.car_rental;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -19,6 +20,7 @@ public class SceneController {
             // Change to new scene
             Main.stage.setScene(new Scene(root));
             // Request focus so stuff works
+            Main.stage.setTitle(fxmlName);
             root.requestFocus();
         } catch (IOException e) {
             e.printStackTrace();

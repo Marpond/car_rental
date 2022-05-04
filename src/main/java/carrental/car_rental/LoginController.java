@@ -51,8 +51,8 @@ public class LoginController implements Initializable {
 
     private void setTextFieldListeners() {
         textFieldUsername.textProperty().addListener((observable, oldValue, newValue) ->
-            buttonLogin.setDisable(newValue.length() <= 0));
+            buttonLogin.setDisable(newValue.length() <= 0 || textFieldPassword.getText().length() <= 0));
         textFieldPassword.textProperty().addListener((observable, oldValue, newValue) ->
-            buttonLogin.setDisable(newValue.length() <= 0));
+            buttonLogin.setDisable(newValue.length() <= 0 || textFieldUsername.getText().length() <= 0));
     }
 }
