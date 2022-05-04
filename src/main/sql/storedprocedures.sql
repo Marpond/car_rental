@@ -58,3 +58,31 @@ create procedure GetCamperCategoryDetails @fld_LicensePlate nchar(10) as
     on category.fld_CategoryID = camper.fld_CategoryID
     where fld_LicensePlate = @fld_LicensePlate;
 go
+
+CREATE PROCEDURE createNewAccount
+    @tlf INT,
+    @name VARCHAR(35),
+    @address VARCHAR(40),
+    @username VARCHAR(20),
+    @password VARCHAR(20)
+        AS
+            BEGIN
+                INSERT INTO tbl_Account
+                (
+                    fld_PhoneNumber,
+                    fld_Name,
+                    fld_Address,
+                    fld_Username,
+                    fld_Password
+                )
+                VALUES
+                    (
+                        @tlf,
+                        @name,
+                        @address,
+                        @username,
+                        @password
+                    )
+            END
+
+GO
