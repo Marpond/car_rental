@@ -11,5 +11,6 @@
       <TextField fx:id="textFieldPassword" layoutX="226.0" layoutY="158.0" />
       <Button fx:id="buttonLogin" layoutX="281.0" layoutY="288.0" mnemonicParsing="false" onAction="#login" text="Login" />
       <Text fx:id="textErrorPrompt" layoutX="206.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="202.0" />
+      <Button layoutX="273.0" layoutY="248.0" mnemonicParsing="false" onAction="#register" text="Register" />
    </children>
 </AnchorPane>

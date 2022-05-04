@@ -28,6 +28,10 @@ public class LoginController implements Initializable {
         buttonLogin.setDisable(true);
         setTextFieldListeners();
     }
+    @FXML
+    private void register() {
+        SceneController.switchTo("register");
+    }
 
     /**
      * Login button handler
