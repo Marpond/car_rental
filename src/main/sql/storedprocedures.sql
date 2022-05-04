@@ -104,3 +104,11 @@ VALUES(
           @fld_Username,
           @fld_Password);
 GO
+
+CREATE PROCEDURE GetCamperBookingStartAndEndDates(
+    @fld_LicensePlate NCHAR(10)
+)
+AS
+SELECT fld_RentalStart, fld_RentalEnd FROM tbl_Reservation
+WHERE fld_LicensePlate = @fld_LicensePlate;
+GO
