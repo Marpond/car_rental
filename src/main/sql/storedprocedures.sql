@@ -82,3 +82,25 @@ VALUES(
           @fld_InsurancePackageID,
           @fld_AccountID);
 GO
+
+CREATE PROCEDURE InsertAccount(
+    @fld_PhoneNumber INT,
+    @fld_Name VARCHAR(35),
+    @fld_Address VARCHAR(40),
+    @fld_Username VARCHAR(20),
+    @fld_Password VARCHAR(20)
+)
+AS
+INSERT INTO tbl_Account(
+    fld_PhoneNumber,
+    fld_Name,
+    fld_Address,
+    fld_Username,
+    fld_Password)
+VALUES(
+          @fld_PhoneNumber,
+          @fld_Name,
+          @fld_Address,
+          @fld_Username,
+          @fld_Password);
+GO
