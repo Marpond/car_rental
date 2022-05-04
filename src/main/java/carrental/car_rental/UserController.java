@@ -1,12 +1,14 @@
 package carrental.car_rental;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.net.URL;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,6 +29,8 @@ public class UserController implements Initializable {
     Button buttonSelectStartWeek;
     @FXML
     Button buttonSelectEndWeek;
+    @FXML
+    Button buttonProceed;
     @FXML
     Text textStartWeek;
     @FXML
@@ -55,8 +59,10 @@ public class UserController implements Initializable {
         setComboBoxInsuranceListener();
         setComboBoxCampersListener();
         setListViewCamperDatesListener();
+        setButtonProceedEnablerTimeline();
         buttonSelectStartWeek.setDisable(true);
         buttonSelectEndWeek.setDisable(true);
+        buttonProceed.setDisable(true);
         Main.resetValues();
     }
 
@@ -93,6 +99,17 @@ public class UserController implements Initializable {
         checkWeekError();
     }
 
+    /**
+     * Sets a timeline that will check every 1/3 of a second whether the user has selected a valid start and end week,
+     * and has chosen an insurance option.
+     */
+    private void setButtonProceedEnablerTimeline() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(333), event ->
+                buttonProceed.setDisable(isWeekOrderIncorrect() || textAreaInsurance.getText().equals("") || Main.endWeekNumber == 0)));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
+
     private void setTotalWeek() {
         Main.totalWeek = Main.endWeekNumber - Main.startWeekNumber + 1;
         if (Main.totalWeek > 0) {
@@ -106,12 +123,14 @@ public class UserController implements Initializable {
      * Checks whether the start week value is larger than the end week
      */
     private void checkWeekError() {
-        if (Main.startWeekNumber > Main.endWeekNumber && Main.endWeekNumber != 0) {
+        if (isWeekOrderIncorrect() && Main.endWeekNumber != 0) {
             textDateError.setText("ERROR: Start week is larger than end week");
-            // TODO: turn off proceed button here
         } else {
             textDateError.setText("");
         }
+    }
+    private boolean isWeekOrderIncorrect() {
+        return Main.startWeekNumber > Main.endWeekNumber;
     }
 
     /**

@@ -68,8 +68,24 @@
             </VBox>
          </children>
       </VBox>
-      <Text fx:id="textTenPercentDeadline" layoutX="178.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10% thing" />
-      <Text fx:id="textNinetyPercentDeadline" layoutX="384.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="90% thing" />
+      <HBox layoutX="161.0" layoutY="388.0">
+         <children>
+            <VBox>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10% Deposit deadline" />
+                  <Text fx:id="textTenPercentDeadline" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="133.0" />
+               </children>
+            </VBox>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="15.0" />
+            <VBox>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="90% Deposit deadline" />
+                  <Text fx:id="textNinetyPercentDeadline" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="132.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
       <Text fx:id="textDateError" layoutX="134.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="333.0" />
+      <Button fx:id="buttonProceed" layoutX="268.0" layoutY="433.0" mnemonicParsing="false" text="Proceed" />
    </children>
 </AnchorPane>
