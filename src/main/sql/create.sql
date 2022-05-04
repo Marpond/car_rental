@@ -47,7 +47,8 @@ CREATE TABLE tbl_Payments(
                              fld_Deposit10PercentPaid BIT,
                              fld_Deposit90PercentPaid BIT,
                              fld_WarningActive BIT,
-                             fld_CurrentDeadline DATE,
+                             fld_10PercentDeadline DATE,
+                             fld_90PercentDeadline DATE,
                              fld_ReservationID INT FOREIGN KEY REFERENCES tbl_Reservation
 )GO
 

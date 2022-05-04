@@ -6,8 +6,12 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +36,10 @@ public class UserController implements Initializable {
     Text textEndWeek;
     @FXML
     Text textTotalRentPeriod;
+    @FXML
+    Text textTenPercentDeadline;
+    @FXML
+    Text textNinetyPercentDeadline;
     DatabaseHandler db = DatabaseHandler.getInstance();
     List<List<String>> insuranceDetails = db.getInsuranceDetails();
 
@@ -71,7 +79,7 @@ public class UserController implements Initializable {
 
     /**
      * Sets the end week of the rental period.
-     * Also calculates the total rent period.
+     * Also sets the total rent period and the deadline for the 10% and 90% of the rent.
      */
     @FXML
     private void buttonSelectEndClick() {
@@ -79,6 +87,7 @@ public class UserController implements Initializable {
         textEndWeek.setText(String.valueOf(Main.endWeek));
         Main.totalWeek = Main.endWeek - Main.startWeek + 1;
         textTotalRentPeriod.setText(String.valueOf(Main.totalWeek));
+        setTextDeadlineValues();
     }
 
     @FXML
@@ -88,6 +97,8 @@ public class UserController implements Initializable {
         textStartWeek.setText("");
         textEndWeek.setText("");
         textTotalRentPeriod.setText("");
+        textTenPercentDeadline.setText("");
+        textNinetyPercentDeadline.setText("");
         buttonSelectStartWeek.setDisable(true);
         buttonSelectEndWeek.setDisable(true);
     }
@@ -114,8 +125,8 @@ public class UserController implements Initializable {
         listViewCamperDates.getItems().clear();
         // Get the current week number
         int currentWeek = LocalDate.now().get(WeekFields.ISO.weekOfWeekBasedYear());
-        // +8 because the full price must be paid before 8 weeks of the rental starts
-        for (int i = currentWeek + 8; i <= 52; i++) {
+        // +9 because the full price must be paid before 8 weeks of the rental starts
+        for (int i = currentWeek + 9; i <= 52; i++) {
             listViewCamperDates.getItems().add(i);
         }
     }
@@ -163,6 +174,35 @@ public class UserController implements Initializable {
                 }
             }
         });
+    }
+    private void setTextDeadlineValues() {
+        if (Main.startWeek != 0) {
+            // Calculate the day 2 weeks after today
+            LocalDate tenDeadline = LocalDate.now().plusDays(14);
+            textTenPercentDeadline.setText(tenDeadline.toString());
+            // Calculate the day 8 weeks before the start of the rental
+            int ninetyDeadline = Main.startWeek - 8;
+            String formattedDate = formatWeekNumberToDate(ninetyDeadline);
+            textNinetyPercentDeadline.setText(formattedDate);
+        }
+    }
+
+    private String formatWeekNumberToDate(int weekNumber) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.WEEK_OF_YEAR, weekNumber);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date ninetyDeadlineDate = calendar.getTime();
+        return new SimpleDateFormat("yyyy-MM-dd").format(ninetyDeadlineDate);
+    }
+
+    private int formatDateToWeekNumber(String date) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return calendar.get(Calendar.WEEK_OF_YEAR);
     }
 
 

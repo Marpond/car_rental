@@ -73,5 +73,7 @@
             </VBox>
          </children>
       </VBox>
+      <Text fx:id="textTenPercentDeadline" layoutX="178.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10% thing" />
+      <Text fx:id="textNinetyPercentDeadline" layoutX="384.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="90% thing" />
    </children>
 </AnchorPane>
