@@ -58,3 +58,27 @@ create procedure GetCamperCategoryDetails @fld_LicensePlate nchar(10) as
     on category.fld_CategoryID = camper.fld_CategoryID
     where fld_LicensePlate = @fld_LicensePlate;
 go
+
+CREATE PROCEDURE InsertReservation(
+    @fld_DateOfReservation DATE,
+    @fld_RentalStart DATE,
+    @fld_RentalEnd DATE,
+    @fld_LicensePlate NCHAR(10),
+    @fld_InsurancePackageID INT,
+    @fld_AccountID INT
+) AS
+INSERT INTO tbl_Reservation(
+    fld_DateOfReservation,
+    fld_RentalStart,
+    fld_RentalEnd,
+    fld_LicensePlate,
+    fld_InsurancePackageID,
+    fld_AccountID)
+VALUES(
+          @fld_DateOfReservation,
+          @fld_RentalStart,
+          @fld_RentalEnd,
+          @fld_LicensePlate,
+          @fld_InsurancePackageID,
+          @fld_AccountID);
+GO
