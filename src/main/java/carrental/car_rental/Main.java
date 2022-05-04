@@ -60,6 +60,7 @@ public class Main extends Application {
 
     /**
      * Converts a week number to a date with the format yyyy/MM/dd
+     *
      * @param weekNumber the week number to be converted
      * @return the date of the week number
      */
@@ -76,7 +77,7 @@ public class Main extends Application {
      * Dates that are after the current year will return a number that is 52 values higher than the actual week number
      * Dates that are before the current year would return a negative value,
      * as you cannot book something in the past and the system does not provide a way to do so
-     *
+     * <p>
      * For example, the current year is 2022:
      * If the date is 2022/01/01, the week number will be 1
      * If the date is 2023/01/01, the week number will be 53

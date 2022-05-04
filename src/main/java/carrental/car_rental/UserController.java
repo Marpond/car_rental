@@ -4,7 +4,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -54,8 +57,8 @@ public class UserController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setComboBoxCampers();
-        setComboBoxInsurance();
+        fillComboBoxCampers();
+        fillComboBoxInsurance();
         setComboBoxInsuranceListener();
         setComboBoxCampersListener();
         setListViewCamperDatesListener();
@@ -82,7 +85,7 @@ public class UserController implements Initializable {
         textStartWeek.setText(Main.startWeekString);
         setTotalWeek();
         setTextDeadlineValues();
-        checkWeekError();
+        checkSelectedWeekError();
         buttonSelectEndWeek.setDisable(false);
     }
 
@@ -96,7 +99,7 @@ public class UserController implements Initializable {
         Main.endWeekString = listViewCamperDates.getSelectionModel().getSelectedItem();
         textEndWeek.setText(Main.endWeekString);
         setTotalWeek();
-        checkWeekError();
+        checkSelectedWeekError();
     }
 
     /**
@@ -104,8 +107,7 @@ public class UserController implements Initializable {
      * and has chosen an insurance option.
      */
     private void setButtonProceedEnablerTimeline() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(333), event ->
-                buttonProceed.setDisable(isWeekOrderIncorrect() || textAreaInsurance.getText().equals("") || Main.endWeekNumber == 0)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(333), event -> buttonProceed.setDisable(isWeekOrderIncorrect() || textAreaInsurance.getText().equals("") || Main.endWeekNumber == 0)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -113,7 +115,7 @@ public class UserController implements Initializable {
     private void setTotalWeek() {
         Main.totalWeek = Main.endWeekNumber - Main.startWeekNumber + 1;
         if (Main.totalWeek > 0) {
-        textTotalRentPeriod.setText("%s weeks".formatted(Main.totalWeek));
+            textTotalRentPeriod.setText("%s weeks".formatted(Main.totalWeek));
         } else {
             textTotalRentPeriod.setText("? weeks");
         }
@@ -122,13 +124,14 @@ public class UserController implements Initializable {
     /**
      * Checks whether the start week value is larger than the end week
      */
-    private void checkWeekError() {
+    private void checkSelectedWeekError() {
         if (isWeekOrderIncorrect() && Main.endWeekNumber != 0) {
             textDateError.setText("ERROR: Start week is larger than end week");
         } else {
             textDateError.setText("");
         }
     }
+
     private boolean isWeekOrderIncorrect() {
         return Main.startWeekNumber > Main.endWeekNumber;
     }
@@ -136,7 +139,7 @@ public class UserController implements Initializable {
     /**
      * Sets the campers in the combo box.
      */
-    private void setComboBoxCampers() {
+    private void fillComboBoxCampers() {
         List<String> campers = db.getCamperLicensePlates();
         comboBoxCampers.getItems().addAll(campers);
     }
@@ -144,7 +147,7 @@ public class UserController implements Initializable {
     /**
      * Sets the insurance numbers in the combo box.
      */
-    private void setComboBoxInsurance() {
+    private void fillComboBoxInsurance() {
         comboBoxInsurance.getItems().add("None");
         for (int i = 1; i <= insuranceDetails.size(); i++) {
             comboBoxInsurance.getItems().add(String.valueOf(i));
@@ -153,13 +156,14 @@ public class UserController implements Initializable {
 
     /**
      * Fills the listViewCamperDates with the available dates for the selected camper
-     * @param yearCount The number of years to show
      */
-    private void fillListViewCamperDates(int yearCount) {
+    private void fillListViewCamperDates() {
         listViewCamperDates.getItems().clear();
         // Get the current week number
         // +12 because the full price must be paid before 8 weeks of the rental start, just to make sure there are no conflicts
-        for (int i = Main.currentWeekNumber + 12; i <= 52*yearCount; i++) {
+        int yearCount = 4;
+        int weekCountInYear = 52;
+        for (int i = Main.currentWeekNumber + 12; i <= weekCountInYear * yearCount; i++) {
             listViewCamperDates.getItems().add(Main.formatWeekNumberToDate(i));
         }
     }
@@ -168,8 +172,7 @@ public class UserController implements Initializable {
      * Enables the select start week button.
      */
     private void setListViewCamperDatesListener() {
-        listViewCamperDates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                buttonSelectStartWeek.setDisable(false));
+        listViewCamperDates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> buttonSelectStartWeek.setDisable(false));
     }
 
     private void fillTextAreaCamperDetails() {
@@ -179,13 +182,14 @@ public class UserController implements Initializable {
 
     /**
      * Listener for comboBoxCampers.
+     *
      * @method fillListViewCamperDates() fills the listViewCamperDates with the available dates for the selected camper
      * @method fillTextAreaCamperDetails() fills the textAreaCamperDetails with the camper details
      */
     private void setComboBoxCampersListener() {
         comboBoxCampers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                fillListViewCamperDates(4);
+                fillListViewCamperDates();
                 fillTextAreaCamperDetails();
             }
         });
@@ -212,12 +216,12 @@ public class UserController implements Initializable {
      * Sets the text of the 10% and 90% deadline text fields with yyyy/MM/dd format.
      */
     private void setTextDeadlineValues() {
-            // Calculate the day 2 weeks after today
-            LocalDate tenDeadline = LocalDate.now().plusDays(14);
-            textTenPercentDeadline.setText(tenDeadline.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
-            // Calculate the day 8 weeks before the start of the rental
-            int ninetyDeadline = Main.startWeekNumber - 7;
-            String formattedDate = Main.formatWeekNumberToDate(ninetyDeadline);
-            textNinetyPercentDeadline.setText(formattedDate);
+        // Calculate the day 2 weeks after today
+        LocalDate tenDeadline = LocalDate.now().plusDays(14);
+        textTenPercentDeadline.setText(tenDeadline.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+        // Calculate the day 8 weeks before the start of the rental
+        int ninetyDeadline = Main.startWeekNumber - 7;
+        String formattedDate = Main.formatWeekNumberToDate(ninetyDeadline);
+        textNinetyPercentDeadline.setText(formattedDate);
     }
 }

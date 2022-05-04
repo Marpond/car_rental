@@ -5,7 +5,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Properties;
 
 
 public class DatabaseHandler {
@@ -111,8 +114,8 @@ public class DatabaseHandler {
         return categoryDetails;
     }
 
-    public void createNewAccount(int phoneNumber, String name, String address, String username, String password){
-        try{
+    public void createNewAccount(int phoneNumber, String name, String address, String username, String password) {
+        try {
             ps = con.prepareCall("{CALL InsertAccount (?,?,?,?,?)}");
             ps.setInt(1, phoneNumber);
             ps.setString(2, name);
@@ -120,7 +123,7 @@ public class DatabaseHandler {
             ps.setString(4, username);
             ps.setString(5, password);
             ps.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -28,6 +28,7 @@ public class LoginController implements Initializable {
         buttonLogin.setDisable(true);
         setTextFieldListeners();
     }
+
     @FXML
     private void register() {
         SceneController.switchTo("register");
@@ -42,7 +43,7 @@ public class LoginController implements Initializable {
     private void login() {
         String username = textFieldUsername.getText();
         String password = textFieldPassword.getText();
-        HashMap<String, String> accounts = db.getAccounts();;
+        HashMap<String, String> accounts = db.getAccounts();
         // If the accounts hashmap contains the username and password,
         // then the user is logged in.
         if (accounts.containsKey(username) && accounts.get(username).equals(password)) {
@@ -63,9 +64,7 @@ public class LoginController implements Initializable {
      * If the user has entered a username and password, the login button is enabled.
      */
     private void setTextFieldListeners() {
-        textFieldUsername.textProperty().addListener((observable, oldValue, newValue) ->
-            buttonLogin.setDisable(newValue.length() <= 0 || textFieldPassword.getText().length() <= 0));
-        textFieldPassword.textProperty().addListener((observable, oldValue, newValue) ->
-            buttonLogin.setDisable(newValue.length() <= 0 || textFieldUsername.getText().length() <= 0));
+        textFieldUsername.textProperty().addListener((observable, oldValue, newValue) -> buttonLogin.setDisable(newValue.length() <= 0 || textFieldPassword.getText().length() <= 0));
+        textFieldPassword.textProperty().addListener((observable, oldValue, newValue) -> buttonLogin.setDisable(newValue.length() <= 0 || textFieldUsername.getText().length() <= 0));
     }
 }
