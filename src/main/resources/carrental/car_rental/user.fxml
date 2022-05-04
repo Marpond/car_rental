@@ -23,12 +23,7 @@
             <VBox prefHeight="242.0" prefWidth="187.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Campers" textAlignment="CENTER" wrappingWidth="214.5870018005371" />
-                  <HBox>
-                     <children>
-                        <ComboBox fx:id="comboBoxCampers" prefHeight="26.0" prefWidth="164.0" />
-                        <Button mnemonicParsing="false" onAction="#buttonResetCamperListViewClick" text="Reset" />
-                     </children>
-                  </HBox>
+                  <ComboBox fx:id="comboBoxCampers" prefHeight="26.0" prefWidth="227.0" />
                   <ListView fx:id="listViewCamperDates" prefHeight="283.0" prefWidth="200.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -75,5 +70,6 @@
       </VBox>
       <Text fx:id="textTenPercentDeadline" layoutX="178.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10% thing" />
       <Text fx:id="textNinetyPercentDeadline" layoutX="384.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="90% thing" />
+      <Text fx:id="textDateError" layoutX="134.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="333.0" />
    </children>
 </AnchorPane>

@@ -68,8 +68,3 @@ CREATE TABLE tbl_Receipt(
                             fld_ReservationID INT FOREIGN KEY REFERENCES tbl_Reservation,
                             fld_DiscountID INT FOREIGN KEY REFERENCES tbl_Discount
 )GO
-
-
-
-
-

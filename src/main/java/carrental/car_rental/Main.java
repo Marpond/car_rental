@@ -43,9 +43,9 @@ public class Main extends Application {
     }
 
     public static void resetValues() {
-        priceInsurance = 0.0;
-        priceBooking = 0.0;
-        priceTotal = 0.0;
+        priceInsurance = 0;
+        priceBooking = 0;
+        priceTotal = 0;
         startWeek = 0;
         endWeek = 0;
         totalWeek = 0;
@@ -66,6 +66,9 @@ public class Main extends Application {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return calendar.get(Calendar.WEEK_OF_YEAR);
+        int currentYear = LocalDate.now().getYear();
+        int calendarYear = calendar.get(Calendar.YEAR);
+        int yearDifference = calendarYear - currentYear;
+        return calendar.get(Calendar.WEEK_OF_YEAR) + yearDifference * 52;
     }
 }

@@ -6,13 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.WeekFields;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,6 +32,8 @@ public class UserController implements Initializable {
     Text textEndWeek;
     @FXML
     Text textTotalRentPeriod;
+    @FXML
+    Text textDateError;
     @FXML
     Text textTenPercentDeadline;
     @FXML
@@ -74,10 +71,11 @@ public class UserController implements Initializable {
     @FXML
     private void buttonSelectStartClick() {
         Main.startWeek = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
-        buttonSelectEndWeek.setDisable(false);
-        buttonSelectStartWeek.setDisable(true);
-        textStartWeek.setText(String.valueOf(Main.startWeek));
+        textStartWeek.setText(listViewCamperDates.getSelectionModel().getSelectedItem());
+        setTotalWeek();
         setTextDeadlineValues();
+        checkWeekError();
+        buttonSelectEndWeek.setDisable(false);
     }
 
     /**
@@ -87,22 +85,30 @@ public class UserController implements Initializable {
     @FXML
     private void buttonSelectEndClick() {
         Main.endWeek = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
-        textEndWeek.setText(String.valueOf(Main.endWeek));
-        Main.totalWeek = Main.endWeek - Main.startWeek + 1;
-        textTotalRentPeriod.setText("%s weeks".formatted(Main.totalWeek));
+        textEndWeek.setText(listViewCamperDates.getSelectionModel().getSelectedItem());
+        setTotalWeek();
+        checkWeekError();
     }
 
-    @FXML
-    private void buttonResetCamperListViewClick() {
-        Main.startWeek = 0;
-        Main.endWeek = 0;
-        textStartWeek.setText("");
-        textEndWeek.setText("");
-        textTotalRentPeriod.setText("");
-        textTenPercentDeadline.setText("");
-        textNinetyPercentDeadline.setText("");
-        buttonSelectStartWeek.setDisable(true);
-        buttonSelectEndWeek.setDisable(true);
+    private void setTotalWeek() {
+        Main.totalWeek = Main.endWeek - Main.startWeek + 1;
+        if (Main.totalWeek > 0) {
+        textTotalRentPeriod.setText("%s weeks".formatted(Main.totalWeek));
+        } else {
+            textTotalRentPeriod.setText("? weeks");
+        }
+    }
+
+    /**
+     * Checks whether the start week value is larger than the end week
+     */
+    private void checkWeekError() {
+        if (Main.startWeek > Main.endWeek && Main.endWeek != 0) {
+            textDateError.setText("ERROR: Start week is larger than end week");
+            // TODO: turn off proceed button here
+        } else {
+            textDateError.setText("");
+        }
     }
 
     /**
@@ -123,27 +129,25 @@ public class UserController implements Initializable {
         }
     }
 
-    private void fillListViewCamperDates() {
+    /**
+     * Fills the listViewCamperDates with the available dates for the selected camper
+     * @param yearCount The number of years to show
+     */
+    private void fillListViewCamperDates(int yearCount) {
         listViewCamperDates.getItems().clear();
         // Get the current week number
         // +12 because the full price must be paid before 8 weeks of the rental start, just to make sure there are no conflicts
-        for (int i = Main.currentWeekNumber + 12; i <= 52*4; i++) {
+        for (int i = Main.currentWeekNumber + 12; i <= 52*yearCount; i++) {
             listViewCamperDates.getItems().add(Main.formatWeekNumberToDate(i));
         }
     }
 
     /**
-     * Disables or enables the buttons depending on the selected item in the combo box.
+     * Enables the select start week button.
      */
     private void setListViewCamperDatesListener() {
-        listViewCamperDates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                buttonSelectStartWeek.setDisable(Main.formatDateToWeekNumber(newValue) <= Main.startWeek);
-                if (Main.startWeek != 0) {
-                    buttonSelectEndWeek.setDisable(Main.formatDateToWeekNumber(newValue) < Main.startWeek);
-                }
-            }
-        });
+        listViewCamperDates.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+                buttonSelectStartWeek.setDisable(false));
     }
 
     private void fillTextAreaCamperDetails() {
@@ -151,10 +155,15 @@ public class UserController implements Initializable {
         textAreaCamperDetails.setText(String.join("\n", camperDetails));
     }
 
+    /**
+     * Listener for comboBoxCampers.
+     * @method fillListViewCamperDates() fills the listViewCamperDates with the available dates for the selected camper
+     * @method fillTextAreaCamperDetails() fills the textAreaCamperDetails with the camper details
+     */
     private void setComboBoxCampersListener() {
         comboBoxCampers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                fillListViewCamperDates();
+                fillListViewCamperDates(4);
                 fillTextAreaCamperDetails();
             }
         });
@@ -171,11 +180,15 @@ public class UserController implements Initializable {
                     Main.priceInsurance = Double.parseDouble(insuranceDetails.get(Integer.parseInt(newValue) - 1).get(0));
                 } catch (Exception e) {
                     textAreaInsurance.setText("No insurance selected");
-                    Main.priceInsurance = 0.0;
+                    Main.priceInsurance = 0;
                 }
             }
         });
     }
+
+    /**
+     * Sets the text of the 10% and 90% deadline text fields with yyyy/MM/dd format.
+     */
     private void setTextDeadlineValues() {
             // Calculate the day 2 weeks after today
             LocalDate tenDeadline = LocalDate.now().plusDays(14);
