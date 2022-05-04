@@ -29,6 +29,11 @@ public class LoginController implements Initializable {
         setTextFieldListeners();
     }
 
+    /**
+     * Login button handler
+     * In future use cases this method will be used to check if the user is an admin or a normal user
+     * and redirect to the appropriate page with the appropriate features
+     */
     @FXML
     private void login() {
         String username = textFieldUsername.getText();
@@ -49,6 +54,10 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     * Sets the text field listeners to check if the user has entered a username and password.
+     * If the user has entered a username and password, the login button is enabled.
+     */
     private void setTextFieldListeners() {
         textFieldUsername.textProperty().addListener((observable, oldValue, newValue) ->
             buttonLogin.setDisable(newValue.length() <= 0 || textFieldPassword.getText().length() <= 0));

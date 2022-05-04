@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -70,8 +71,9 @@ public class UserController implements Initializable {
      */
     @FXML
     private void buttonSelectStartClick() {
-        Main.startWeek = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
-        textStartWeek.setText(listViewCamperDates.getSelectionModel().getSelectedItem());
+        Main.startWeekNumber = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
+        Main.startWeekString = listViewCamperDates.getSelectionModel().getSelectedItem();
+        textStartWeek.setText(Main.startWeekString);
         setTotalWeek();
         setTextDeadlineValues();
         checkWeekError();
@@ -84,14 +86,15 @@ public class UserController implements Initializable {
      */
     @FXML
     private void buttonSelectEndClick() {
-        Main.endWeek = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
-        textEndWeek.setText(listViewCamperDates.getSelectionModel().getSelectedItem());
+        Main.endWeekNumber = Main.formatDateToWeekNumber(listViewCamperDates.getSelectionModel().getSelectedItem());
+        Main.endWeekString = listViewCamperDates.getSelectionModel().getSelectedItem();
+        textEndWeek.setText(Main.endWeekString);
         setTotalWeek();
         checkWeekError();
     }
 
     private void setTotalWeek() {
-        Main.totalWeek = Main.endWeek - Main.startWeek + 1;
+        Main.totalWeek = Main.endWeekNumber - Main.startWeekNumber + 1;
         if (Main.totalWeek > 0) {
         textTotalRentPeriod.setText("%s weeks".formatted(Main.totalWeek));
         } else {
@@ -103,7 +106,7 @@ public class UserController implements Initializable {
      * Checks whether the start week value is larger than the end week
      */
     private void checkWeekError() {
-        if (Main.startWeek > Main.endWeek && Main.endWeek != 0) {
+        if (Main.startWeekNumber > Main.endWeekNumber && Main.endWeekNumber != 0) {
             textDateError.setText("ERROR: Start week is larger than end week");
             // TODO: turn off proceed button here
         } else {
@@ -194,7 +197,7 @@ public class UserController implements Initializable {
             LocalDate tenDeadline = LocalDate.now().plusDays(14);
             textTenPercentDeadline.setText(tenDeadline.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             // Calculate the day 8 weeks before the start of the rental
-            int ninetyDeadline = Main.startWeek - 7;
+            int ninetyDeadline = Main.startWeekNumber - 7;
             String formattedDate = Main.formatWeekNumberToDate(ninetyDeadline);
             textNinetyPercentDeadline.setText(formattedDate);
     }

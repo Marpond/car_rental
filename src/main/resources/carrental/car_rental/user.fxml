@@ -42,7 +42,7 @@
             </VBox>
          </children>
       </HBox>
-      <VBox layoutX="191.0" layoutY="296.0" prefHeight="51.0" prefWidth="220.0">
+      <VBox layoutX="191.0" layoutY="296.0" prefHeight="92.0" prefWidth="220.0">
          <children>
             <HBox prefHeight="51.0" prefWidth="217.0">
                <children>
@@ -60,7 +60,7 @@
                   </VBox>
                </children>
             </HBox>
-            <VBox prefHeight="45.0" prefWidth="220.0">
+            <VBox prefHeight="48.0" prefWidth="220.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Total rent period:" textAlignment="CENTER" wrappingWidth="219.13000106811523" />
                   <Text fx:id="textTotalRentPeriod" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="219.13000106811523" />
