@@ -47,7 +47,7 @@ public class DatabaseHandler {
         }
     }
 
-    public void closeConnection(){
+    public static void closeConnection(){
         try{
             ps.close();
             con.close();
@@ -97,6 +97,23 @@ public class DatabaseHandler {
             e.printStackTrace();
         }
         return insurance;
+    }
+
+    public List<String> getCamperCategoryDetails(String licensePlate) {
+        List<String> categoryDetails = new ArrayList<>();
+        try {
+            ps = con.prepareStatement("GetCamperCategoryDetails ?");
+            ps.setString(1, licensePlate);
+            rs = ps.executeQuery();
+            while(rs.next()) {
+                categoryDetails.add(rs.getString("fld_CategoryName"));
+                categoryDetails.add(rs.getString("fld_MainSeasonPrice"));
+                categoryDetails.add(rs.getString("fld_LowSeasonPrice"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryDetails;
     }
 
 }

@@ -1,11 +1,11 @@
 use DB_AutoCamperRental go
 
-EXECUTE InsertInitialCategories;
+EXECUTE InsertInitialCategoryEntries;
 
 EXECUTE InsertInitialCamperEntries;
 
 EXECUTE InsertInitialInsurancePackageEntries;
 
-EXECUTE insertInitialDiscountEntries;
+EXECUTE InsertInitialDiscountEntries;
 
-EXECUTE InsertInitialAccounts;
+EXECUTE InsertInitialAccountEntries;

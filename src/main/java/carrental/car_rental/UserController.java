@@ -5,11 +5,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -19,9 +19,11 @@ public class UserController implements Initializable {
     @FXML
     ComboBox<String> comboBoxCampers;
     @FXML
-    ComboBox<Integer> comboBoxInsurance;
+    ComboBox<String> comboBoxInsurance;
     @FXML
     TextArea textAreaInsurance;
+    @FXML
+    TextArea textAreaCamperDetails;
     DatabaseHandler db = DatabaseHandler.getInstance();
     List<List<String>> insuranceDetails = db.getInsuranceDetails();
 
@@ -38,6 +40,10 @@ public class UserController implements Initializable {
         setComboBoxCampersListener();
     }
 
+    @FXML
+    private void switchToLogin() {
+        SceneController.switchTo("login");
+    }
     /**
      * Sets the campers in the combo box.
      */
@@ -50,8 +56,9 @@ public class UserController implements Initializable {
      * Sets the insurance numbers in the combo box.
      */
     private void setComboBoxInsurance() {
+        comboBoxInsurance.getItems().add("None");
         for (int i = 1; i <= insuranceDetails.size(); i++) {
-            comboBoxInsurance.getItems().add(i);
+            comboBoxInsurance.getItems().add(String.valueOf(i));
         }
     }
 
@@ -64,10 +71,16 @@ public class UserController implements Initializable {
         }
     }
 
+    private void fillTextAreaCamperDetails() {
+        List<String> camperDetails = db.getCamperCategoryDetails(comboBoxCampers.getValue());
+        textAreaCamperDetails.setText(String.join("\n", camperDetails));
+    }
+
     private void setComboBoxCampersListener() {
         comboBoxCampers.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             assert newValue != null;
             fillListViewCamperDates();
+            fillTextAreaCamperDetails();
         });
     }
 
@@ -77,9 +90,13 @@ public class UserController implements Initializable {
     private void setComboBoxInsuranceListener() {
         comboBoxInsurance.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             assert newValue != null;
-            textAreaInsurance.setText(String.join("\n",insuranceDetails.get(newValue - 1)));
-            // Set the price of the insurance
-            Main.priceInsurance = Double.parseDouble(insuranceDetails.get(newValue - 1).get(0));
+            try {
+                textAreaInsurance.setText(String.join("\n", insuranceDetails.get(Integer.parseInt(newValue) - 1)));
+                Main.priceInsurance = Double.parseDouble(insuranceDetails.get(Integer.parseInt(newValue) - 1).get(0));
+            } catch (Exception e) {
+                textAreaInsurance.setText("No insurance selected");
+                Main.priceInsurance = 0.0;
+            }
         });
     }
 

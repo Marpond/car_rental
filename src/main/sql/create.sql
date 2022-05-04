@@ -24,7 +24,7 @@ CREATE TABLE tbl_Camper(
 
 CREATE TABLE tbl_Account(
                             fld_AccountID INT PRIMARY KEY IDENTITY,
-                            fld_PhoneNoNumber INT,
+                            fld_PhoneNumber INT,
                             fld_Name VARCHAR(35),
                             fld_Address VARCHAR(40),
                             fld_Username VARCHAR(20),

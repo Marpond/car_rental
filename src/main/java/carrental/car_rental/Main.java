@@ -24,6 +24,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        stage.setOnCloseRequest(e -> DatabaseHandler.closeConnection());
     }
 
     public static void main(String[] args) {

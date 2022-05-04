@@ -9,12 +9,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="carrental.car_rental.UserController">
    <children>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="back" />
-      <HBox layoutX="132.0" layoutY="40.0" prefHeight="242.0" prefWidth="337.0">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToLogin" text="back" />
+      <HBox layoutX="18.0" layoutY="54.0" prefHeight="242.0" prefWidth="564.0">
          <children>
+            <VBox>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Camper details" textAlignment="CENTER" wrappingWidth="173.13000106811523" />
+                  <TextArea fx:id="textAreaCamperDetails" prefHeight="228.0" prefWidth="174.0" />
+               </children>
+            </VBox>
             <VBox prefHeight="242.0" prefWidth="187.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Campers" textAlignment="CENTER" wrappingWidth="214.5870018005371" />
@@ -22,10 +27,10 @@
                   <ListView fx:id="listViewCamperDates" prefHeight="283.0" prefWidth="200.0" />
                </children>
             </VBox>
-            <VBox prefHeight="171.0" prefWidth="100.0">
+            <VBox prefHeight="242.0" prefWidth="208.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Packages" />
-                  <ComboBox fx:id="comboBoxInsurance" prefWidth="150.0" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Insurance Packages" textAlignment="CENTER" wrappingWidth="175.53699493408203" />
+                  <ComboBox fx:id="comboBoxInsurance" prefHeight="26.0" prefWidth="184.0" />
                   <TextArea fx:id="textAreaInsurance" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </VBox>
