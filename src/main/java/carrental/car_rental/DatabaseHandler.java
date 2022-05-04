@@ -113,7 +113,7 @@ public class DatabaseHandler {
 
     public void createNewAccount(int phoneNumber, String name, String address, String username, String password){
         try{
-            ps = con.prepareCall("{CALL createNewAccount(?,?,?,?,?)}");
+            ps = con.prepareCall("{CALL InsertAccount (?,?,?,?,?)}");
             ps.setInt(1, phoneNumber);
             ps.setString(2, name);
             ps.setString(3, address);
