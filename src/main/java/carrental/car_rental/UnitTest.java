@@ -10,6 +10,11 @@ public class UnitTest {
     DatabaseHandler db = DatabaseHandler.getInstance();
 
     @Test
+    public void constructorTest() {
+        DatabaseHandler.DBConstructor();
+        Assert.assertNotNull(DatabaseHandler.getInstance());
+    }
+    @Test
     public void testGetCamperLicensePlates() {
         List<String> expected = List.of(
                 "LP001","LP002","LP003",
