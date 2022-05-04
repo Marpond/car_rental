@@ -111,4 +111,19 @@ public class DatabaseHandler {
         return categoryDetails;
     }
 
+    public void createNewAccount(int phoneNumber, String name, String address, String username, String password){
+        try{
+            ps = con.prepareCall("{CALL createNewAccount(?,?,?,?,?)}");
+            ps.setInt(1, phoneNumber);
+            ps.setString(2, name);
+            ps.setString(3, address);
+            ps.setString(4, username);
+            ps.setString(5, password);
+            ps.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 }
