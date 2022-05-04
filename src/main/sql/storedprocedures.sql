@@ -86,3 +86,37 @@ CREATE PROCEDURE createNewAccount
             END
 
 GO
+
+CREATE PROCEDURE createNewReservation
+    @resDate DATE,
+    @rentalStart DATE,
+    @rentalEnd DATE,
+    @isCancelled BIT,
+    @licensePlate NCHAR(10),
+    @insuranceID INT,
+    @accountID INT
+        AS
+            BEGIN
+                INSERT INTO tbl_Reservation
+                (
+                    fld_DateOfReservation,
+                    fld_RentalStart,
+                    fld_RentalEnd,
+                    fld_IsCancelled,
+                    fld_LicensePlate,
+                    fld_InsurancePackageID,
+                    fld_AccountID
+                )
+                VALUES
+                    (
+                        @resDate,
+                        @rentalStart,
+                        @rentalEnd,
+                        @isCancelled,
+                        @licensePlate,
+                        @insuranceID,
+                        @accountID
+                    )
+            END
+
+GO
